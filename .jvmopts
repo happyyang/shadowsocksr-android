@@ -1,6 +1,6 @@
--XX:MaxPermSize=512m
--Xms1g
--Xmx3g
+-XX:MaxPermSize=256m
+-Xms512m
+-Xmx512m
 -Xss2m
 -XX:+CMSClassUnloadingEnabled
 -XX:+UseConcMarkSweepGC

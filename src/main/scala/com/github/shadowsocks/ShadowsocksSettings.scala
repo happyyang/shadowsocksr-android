@@ -47,21 +47,21 @@ object ShadowsocksSettings {
 
   def updatePreference(pref: Preference, name: String, profile: Profile) {
     name match {
-      case Key.name => updateSummaryEditTextPreference(pref, profile.name)
-      case Key.host => updateSummaryEditTextPreference(pref, profile.host)
-      case Key.remotePort => updateNumberPickerPreference(pref, profile.remotePort)
-      case Key.localPort => updateNumberPickerPreference(pref, profile.localPort)
-      case Key.password => updatePasswordEditTextPreference(pref, profile.password)
-      case Key.method => updateDropDownPreference(pref, profile.method)
-      case Key.protocol => updateDropDownPreference(pref, profile.protocol)
-      case Key.obfs => updateDropDownPreference(pref, profile.obfs)
-      case Key.obfs_param => updateSummaryEditTextPreference(pref, profile.obfs_param)
+     // case Key.name => updateSummaryEditTextPreference(pref, profile.name)
+     // case Key.host => updateSummaryEditTextPreference(pref, profile.host)
+     // case Key.remotePort => updateNumberPickerPreference(pref, profile.remotePort)
+     // case Key.localPort => updateNumberPickerPreference(pref, profile.localPort)
+     // case Key.password => updatePasswordEditTextPreference(pref, profile.password)
+     // case Key.method => updateDropDownPreference(pref, profile.method)
+     // case Key.protocol => updateDropDownPreference(pref, profile.protocol)
+     // case Key.obfs => updateDropDownPreference(pref, profile.obfs)
+     // case Key.obfs_param => updateSummaryEditTextPreference(pref, profile.obfs_param)
       case Key.route => updateDropDownPreference(pref, profile.route)
-      case Key.proxyApps => updateSwitchPreference(pref, profile.proxyApps)
-      case Key.udpdns => updateSwitchPreference(pref, profile.udpdns)
-      case Key.dns => updateSummaryEditTextPreference(pref, profile.dns)
-      case Key.china_dns => updateSummaryEditTextPreference(pref, profile.china_dns)
-      case Key.ipv6 => updateSwitchPreference(pref, profile.ipv6)
+     // case Key.proxyApps => updateSwitchPreference(pref, profile.proxyApps)
+     // case Key.udpdns => updateSwitchPreference(pref, profile.udpdns)
+     // case Key.dns => updateSummaryEditTextPreference(pref, profile.dns)
+     // case Key.china_dns => updateSummaryEditTextPreference(pref, profile.china_dns)
+     // case Key.ipv6 => updateSwitchPreference(pref, profile.ipv6)
     }
   }
 }
@@ -77,131 +77,153 @@ class ShadowsocksSettings extends PreferenceFragment with OnSharedPreferenceChan
   override def onCreate(savedInstanceState: Bundle) {
     super.onCreate(savedInstanceState)
     addPreferencesFromResource(R.xml.pref_all)
-    getPreferenceManager.getSharedPreferences.registerOnSharedPreferenceChangeListener(this)
-
-    findPreference(Key.name).setOnPreferenceChangeListener((_, value) => {
-      profile.name = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.host).setOnPreferenceChangeListener((_, value) => {
-      profile.host = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.remotePort).setOnPreferenceChangeListener((_, value) => {
-      profile.remotePort = value.asInstanceOf[Int]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.localPort).setOnPreferenceChangeListener((_, value) => {
-      profile.localPort = value.asInstanceOf[Int]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.password).setOnPreferenceChangeListener((_, value) => {
-      profile.password = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.method).setOnPreferenceChangeListener((_, value) => {
-      profile.method = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.protocol).setOnPreferenceChangeListener((_, value) => {
-      profile.protocol = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.obfs).setOnPreferenceChangeListener((_, value) => {
-      profile.obfs = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.obfs_param).setOnPreferenceChangeListener((_, value) => {
-      profile.obfs_param = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.route).setOnPreferenceChangeListener((_, value) => {
-      profile.route = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-
-    isProxyApps = findPreference(Key.proxyApps).asInstanceOf[SwitchPreference]
-    isProxyApps.setOnPreferenceClickListener(_ => {
-      startActivity(new Intent(activity, classOf[AppManager]))
-      isProxyApps.setChecked(true)
-      false
-    })
-    isProxyApps.setOnPreferenceChangeListener((_, value) => {
-      profile.proxyApps = value.asInstanceOf[Boolean]
-      app.profileManager.updateProfile(profile)
-    })
-
-    findPreference(Key.udpdns).setOnPreferenceChangeListener((_, value) => {
-      profile.udpdns = value.asInstanceOf[Boolean]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.dns).setOnPreferenceChangeListener((_, value) => {
-      profile.dns = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.china_dns).setOnPreferenceChangeListener((_, value) => {
-      profile.china_dns = value.asInstanceOf[String]
-      app.profileManager.updateProfile(profile)
-    })
-    findPreference(Key.ipv6).setOnPreferenceChangeListener((_, value) => {
-      profile.ipv6 = value.asInstanceOf[Boolean]
-      app.profileManager.updateProfile(profile)
-    })
-
-    val switch = findPreference(Key.isAutoConnect).asInstanceOf[SwitchPreference]
-    switch.setOnPreferenceChangeListener((_, value) => {
-      BootReceiver.setEnabled(activity, value.asInstanceOf[Boolean])
-      true
-    })
-    if (getPreferenceManager.getSharedPreferences.getBoolean(Key.isAutoConnect, false)) {
-      BootReceiver.setEnabled(activity, true)
-      getPreferenceManager.getSharedPreferences.edit.remove(Key.isAutoConnect).apply
+    // getPreferenceManager.getSharedPreferences.registerOnSharedPreferenceChangeListener(this)
+	// gile add
+	try {
+		findPreference(Key.host).setValue(app.mVpnPref.getHost());
+		//
+		findPreference(Key.remotePort).setValue(app.mVpnPref.getRemotePort());
+		//
+		findPreference(Key.localPort).setValue(app.mVpnPref.getLocalPort());
+		//
+		findPreference(Key.method).setValue(app.mVpnPref.getMethod());
+		//
+		findPreference(Key.protocol).setValue(app.mVpnPref.getProtocal());
+		//
+		findPreference(Key.obfs).setValue(app.mVpnPref.getObfs());
+		//
+		findPreference(Key.obfs_param).setValue(app.mVpnPref.getObfs_param());
+	} catch {
+      case e: IOException =>
+        Log.e(TAG, e.getMessage)
     }
-    switch.setChecked(BootReceiver.getEnabled(activity))
+	
+	
+	
+	
+    // findPreference(Key.name).setOnPreferenceChangeListener((_, value) => {
+    //   profile.name = value.asInstanceOf[String]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.host).setOnPreferenceChangeListener((_, value) => {
+    //  profile.host = value.asInstanceOf[String]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.remotePort).setOnPreferenceChangeListener((_, value) => {
+    //   profile.remotePort = value.asInstanceOf[Int]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.localPort).setOnPreferenceChangeListener((_, value) => {
+    //   profile.localPort = value.asInstanceOf[Int]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.password).setOnPreferenceChangeListener((_, value) => {
+    //   profile.password = value.asInstanceOf[String]
+    //  app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.method).setOnPreferenceChangeListener((_, value) => {
+    //   profile.method = value.asInstanceOf[String]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.protocol).setOnPreferenceChangeListener((_, value) => {
+    //   profile.protocol = value.asInstanceOf[String]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.obfs).setOnPreferenceChangeListener((_, value) => {
+    //   profile.obfs = value.asInstanceOf[String]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.obfs_param).setOnPreferenceChangeListener((_, value) => {
+    //   profile.obfs_param = value.asInstanceOf[String]
+    //   app.profileManager.updateProfile(profile)
+    // })
+     findPreference(Key.route).setOnPreferenceChangeListener((_, value) => {
+       profile.route = value.asInstanceOf[String]
+       app.profileManager.updateProfile(profile)
+     })
 
-    val tfo = findPreference(Key.tfo).asInstanceOf[SwitchPreference]
-    tfo.setChecked(TcpFastOpen.sendEnabled)
-    tfo.setOnPreferenceChangeListener((_, v) => {
-      val value = v.asInstanceOf[Boolean]
-      val result = TcpFastOpen.enabled(value)
-      if (result != null && result != "Success.")
-        Snackbar.make(activity.findViewById(android.R.id.content), result, Snackbar.LENGTH_LONG).show()
-      value == TcpFastOpen.sendEnabled
-    })
-    if (!TcpFastOpen.supported) {
-      tfo.setEnabled(false)
-      tfo.setSummary(getString(R.string.tcp_fastopen_summary_unsupported, java.lang.System.getProperty("os.version")))
-    }
+    // isProxyApps = findPreference(Key.proxyApps).asInstanceOf[SwitchPreference]
+    // isProxyApps.setOnPreferenceClickListener(_ => {
+    //   startActivity(new Intent(activity, classOf[AppManager]))
+    //   isProxyApps.setChecked(true)
+    //   false
+    // })
+    // isProxyApps.setOnPreferenceChangeListener((_, value) => {
+    //   profile.proxyApps = value.asInstanceOf[Boolean]
+    //   app.profileManager.updateProfile(profile)
+    // })
 
-    findPreference("recovery").setOnPreferenceClickListener((preference: Preference) => {
-      app.track(TAG, "reset")
-      activity.recovery()
-      true
-    })
+    // findPreference(Key.udpdns).setOnPreferenceChangeListener((_, value) => {
+    //   profile.udpdns = value.asInstanceOf[Boolean]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.dns).setOnPreferenceChangeListener((_, value) => {
+    //   profile.dns = value.asInstanceOf[String]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.china_dns).setOnPreferenceChangeListener((_, value) => {
+    //   profile.china_dns = value.asInstanceOf[String]
+    //   app.profileManager.updateProfile(profile)
+    // })
+    // findPreference(Key.ipv6).setOnPreferenceChangeListener((_, value) => {
+    //   profile.ipv6 = value.asInstanceOf[Boolean]
+    //   app.profileManager.updateProfile(profile)
+    // })
 
-    findPreference("about").setOnPreferenceClickListener((preference: Preference) => {
-      app.track(TAG, "about")
-      val web = new WebView(activity)
-      web.loadUrl("file:///android_asset/pages/about.html")
-      web.setWebViewClient(new WebViewClient() {
-        override def shouldOverrideUrlLoading(view: WebView, url: String): Boolean = {
-          try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-          } catch {
-            case _: android.content.ActivityNotFoundException => // Ignore
-          }
-          true
-        }
-      })
+    // val switch = findPreference(Key.isAutoConnect).asInstanceOf[SwitchPreference]
+    // switch.setOnPreferenceChangeListener((_, value) => {
+    //   BootReceiver.setEnabled(activity, value.asInstanceOf[Boolean])
+    //   true
+    // })
+    // if (getPreferenceManager.getSharedPreferences.getBoolean(Key.isAutoConnect, false)) {
+    //   BootReceiver.setEnabled(activity, true)
+    //   getPreferenceManager.getSharedPreferences.edit.remove(Key.isAutoConnect).apply
+    // }
+    // switch.setChecked(BootReceiver.getEnabled(activity))
 
-      new AlertDialog.Builder(activity)
-        .setTitle(getString(R.string.about_title).formatLocal(Locale.ENGLISH, BuildConfig.VERSION_NAME))
-        .setNegativeButton(getString(android.R.string.ok), null)
-        .setView(web)
-        .create()
-        .show()
-      true
-    })
+    // val tfo = findPreference(Key.tfo).asInstanceOf[SwitchPreference]
+    // tfo.setChecked(TcpFastOpen.sendEnabled)
+    // tfo.setOnPreferenceChangeListener((_, v) => {
+    //   val value = v.asInstanceOf[Boolean]
+    //   val result = TcpFastOpen.enabled(value)
+    //   if (result != null && result != "Success.")
+    //     Snackbar.make(activity.findViewById(android.R.id.content), result, Snackbar.LENGTH_LONG).show()
+    //   value == TcpFastOpen.sendEnabled
+    // })
+    // if (!TcpFastOpen.supported) {
+    //   tfo.setEnabled(false)
+    //   tfo.setSummary(getString(R.string.tcp_fastopen_summary_unsupported, java.lang.System.getProperty("os.version")))
+    // }
+
+    // findPreference("recovery").setOnPreferenceClickListener((preference: Preference) => {
+    //   app.track(TAG, "reset")
+    //   activity.recovery()
+    //   true
+    // })
+
+    // findPreference("about").setOnPreferenceClickListener((preference: Preference) => {
+    //   app.track(TAG, "about")
+    //   val web = new WebView(activity)
+    //   web.loadUrl("file:///android_asset/pages/about.html")
+    //   web.setWebViewClient(new WebViewClient() {
+    //     override def shouldOverrideUrlLoading(view: WebView, url: String): Boolean = {
+    //       try {
+    //         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    //       } catch {
+    //        case _: android.content.ActivityNotFoundException => // Ignore
+    //       }
+    //       true
+    //     }
+    //   })
+
+    //   new AlertDialog.Builder(activity)
+    //     .setTitle(getString(R.string.about_title).formatLocal(Locale.ENGLISH, BuildConfig.VERSION_NAME))
+    //    .setNegativeButton(getString(android.R.string.ok), null)
+    //     .setView(web)
+    //     .create()
+    //    .show()
+    //  true
+    // })
   }
 
   def refreshProfile() {

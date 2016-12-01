@@ -84,7 +84,7 @@ class ShadowsocksApplication extends Application {
   import ShadowsocksApplication._
 
   final val SIG_FUNC = "getSignature"
-  var containerHolder: ContainerHolder = _
+  lazy var containerHolder: ContainerHolder = _
   lazy val tracker = GoogleAnalytics.getInstance(this).newTracker(R.xml.tracker)
   lazy val settings = PreferenceManager.getDefaultSharedPreferences(this)
   lazy val editor = settings.edit
@@ -92,7 +92,8 @@ class ShadowsocksApplication extends Application {
 
   def isNatEnabled = settings.getBoolean(Key.isNAT, false)
   def isVpnEnabled = !isNatEnabled
-
+  // gile add
+  var mVpnPref: VpnPref = _ 
   // send event
   def track(category: String, action: String) = tracker.send(new HitBuilders.EventBuilder()
     .setAction(action)
@@ -190,6 +191,9 @@ class ShadowsocksApplication extends Application {
     JobManager.create(this).addJobCreator(DonaldTrump)
 
     TcpFastOpen.enabled(settings.getBoolean(Key.tfo, false))
+	
+	// gile add
+	mVpnPref = new VpnHttpProcessor().VpnHttpClient();
   }
 
   def refreshContainerHolder {
